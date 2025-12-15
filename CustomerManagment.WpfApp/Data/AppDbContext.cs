@@ -42,11 +42,11 @@ namespace CustomerManagment.WpfApp.Data
                 entity.Property(e => e.CustomerEmail).IsRequired();
                 entity.Property(e => e.CreateDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                // One-to-many relationship with CustomerRequests
+                // One-to-many relationship with CustomerRequests with CASCADE DELETE
                 entity.HasMany(e => e.CustomerRequests)
                       .WithOne(r => r.Customer)
                       .HasForeignKey(r => r.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Cascade); // Important: This enables cascade delete
             });
 
             // Configure CustomerRequest entity

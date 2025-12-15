@@ -7,7 +7,6 @@ using CustomerManagment.WpfApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Windows.Controls;
-using CustomerManagment.WpfApp.Data.Models;
 
 namespace CustomerManagment.WpfApp
 {
@@ -22,7 +21,6 @@ namespace CustomerManagment.WpfApp
             set => SetField(ref _customers, value);
         }
 
-        // Add these properties to your MainWindow class
         private string _totalRequestsText;
         private string _pendingRequestsText;
         private string _solvedRequestsText;
@@ -72,9 +70,8 @@ namespace CustomerManagment.WpfApp
                 foreach (var customer in customers)
                 {
                     var requestsCount = customer.CustomerRequests?.Count ?? 0;
-                    // Use Status enum instead of IsSolved
-                    var solvedCount = customer.CustomerRequests?.Count(r => r.Status == RequestStatus.Solved) ?? 0;
-                    var pendingCount = customer.CustomerRequests?.Count(r => r.Status == RequestStatus.Pending) ?? 0;
+                    var solvedCount = customer.CustomerRequests?.Count(r => r.Status == Data.Models.RequestStatus.Solved) ?? 0;
+                    var pendingCount = customer.CustomerRequests?.Count(r => r.Status == Data.Models.RequestStatus.Pending) ?? 0;
 
                     totalRequests += requestsCount;
                     solvedRequests += solvedCount;
@@ -152,6 +149,73 @@ namespace CustomerManagment.WpfApp
                     // Refresh the counts after closing the requests window
                     LoadCustomers();
                 }
+            }
+        }
+
+        // NEW: Edit Customer Handler
+        private void BtnEditCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int customerId)
+            {
+                var customer = Customers.FirstOrDefault(c => c.Id == customerId);
+                if (customer != null)
+                {
+                    var editCustomerWindow = new EditCustomerPage(customerId);
+                    if (editCustomerWindow.ShowDialog() == true)
+                    {
+                        LoadCustomers(); // Refresh the list
+                    }
+                }
+            }
+        }
+
+        // NEW: Delete Customer Handler
+        private void BtnDeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int customerId)
+            {
+                var customer = Customers.FirstOrDefault(c => c.Id == customerId);
+                if (customer != null)
+                {
+                    // Ask for confirmation
+                    var result = MessageBox.Show(
+                        $"Are you sure you want to delete customer '{customer.CustomerName}'?\n\n" +
+                        "This will also delete all their requests!",
+                        "Confirm Delete",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        DeleteCustomer(customerId);
+                    }
+                }
+            }
+        }
+
+        private void DeleteCustomer(int customerId)
+        {
+            try
+            {
+                var customer = _context.Customers
+                    .Include(c => c.CustomerRequests) // Include requests for cascade delete
+                    .FirstOrDefault(c => c.Id == customerId);
+
+                if (customer != null)
+                {
+                    _context.Customers.Remove(customer);
+                    _context.SaveChanges();
+
+                    MessageBox.Show($"Customer '{customer.CustomerName}' deleted successfully!",
+                        "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    LoadCustomers(); // Refresh the list
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting customer: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

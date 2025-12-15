@@ -181,54 +181,60 @@
                     <DataGrid.Columns>
                         <!-- ID Column -->
                         <DataGridTextColumn Header="ID" 
-                                            Binding="{Binding Id}" 
-                                            Width="60"/>
+                        Binding="{Binding Id}" Width="60"/>
 
                         <!-- Name Column -->
                         <DataGridTextColumn Header="NAME" 
-                                            Binding="{Binding CustomerName}" 
-                                            Width="180"/>
+                        Binding="{Binding CustomerName}" Width="150"/>
 
                         <!-- Email Column -->
                         <DataGridTextColumn Header="EMAIL" 
-                                            Binding="{Binding CustomerEmail}" 
-                                            Width="220"/>
+                        Binding="{Binding CustomerEmail}" Width="200"/>
 
                         <!-- Mobile Column -->
                         <DataGridTextColumn Header="MOBILE" 
-                                            Binding="{Binding CustomerMobileNumber}" 
-                                            Width="120"/>
+                        Binding="{Binding CustomerMobileNumber}" Width="100"/>
 
                         <!-- Job Title Column -->
                         <DataGridTextColumn Header="JOB TITLE" 
-                                            Binding="{Binding CustomerJobTitle}" 
-                                            Width="150"/>
+                        Binding="{Binding CustomerJobTitle}" Width="130"/>
 
                         <!-- Requests Column -->
                         <DataGridTextColumn Header="REQUESTS" 
-                                            Binding="{Binding RequestsSummary}" 
-                                            Width="120"
-                                            ElementStyle="{StaticResource RequestsColumnStyle}"/>
+                        Binding="{Binding RequestsSummary}" Width="100"
+                        ElementStyle="{StaticResource RequestsColumnStyle}"/>
 
-                        <!-- Actions Column -->
-                        <DataGridTemplateColumn Header="ACTIONS" Width="200">
+                        <!-- Actions Column (Updated Width) -->
+                        <DataGridTemplateColumn Header="ACTIONS" Width="280">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Submit Request" 
-                                                Click="BtnSubmitRequest_Click" 
-                                                Tag="{Binding Id}"
-                                                Background="#2196F3" 
-                                                Foreground="White"
-                                                Padding="8,4"
-                                                Margin="0,0,5,0"/>
+                                        <Button Content="📝 Edit" 
+                            Click="BtnEditCustomer_Click" 
+                            Tag="{Binding Id}"
+                            Background="#2196F3" 
+                            Foreground="White"
+                            Padding="5,2"
+                            Margin="2,0"
+                            ToolTip="Edit customer details"/>
 
-                                        <Button Content="View Requests" 
-                                                Click="BtnViewRequests_Click" 
-                                                Tag="{Binding Id}"
-                                                Background="#FF9800" 
-                                                Foreground="White"
-                                                Padding="8,4"/>
+                                        <Button Content="🗑️ Delete" 
+                            Click="BtnDeleteCustomer_Click" 
+                            Tag="{Binding Id}"
+                            Background="#F44336" 
+                            Foreground="White"
+                            Padding="5,2"
+                            Margin="2,0"
+                            ToolTip="Delete customer and all their requests"/>
+
+                                        <Button Content="📋 View Requests" 
+                            Click="BtnViewRequests_Click" 
+                            Tag="{Binding Id}"
+                            Background="#FF9800" 
+                            Foreground="White"
+                            Padding="5,2"
+                            Margin="2,0"
+                            ToolTip="View customer requests"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
