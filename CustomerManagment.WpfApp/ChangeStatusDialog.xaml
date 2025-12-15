@@ -1,0 +1,89 @@
+﻿<Window x:Class="CustomerManagment.WpfApp.ChangeStatusDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Change Request Status" Height="400" Width="400"
+        WindowStartupLocation="CenterOwner"
+        Background="#2D2D30">
+
+    <Window.Resources>
+        <Style TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2196F3" Padding="10">
+            <TextBlock Text="Change Request Status" 
+                       FontSize="16" FontWeight="Bold" 
+                       Foreground="White" HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Current Request Info -->
+        <Border Grid.Row="1" Background="#252526" Margin="0,10,0,10">
+            <StackPanel>
+                <TextBlock x:Name="txtRequestDescription" 
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,15"
+                           Foreground="White"/>
+
+                <TextBlock Text="Current Status:" FontWeight="Bold" Foreground="#AAAAAA"/>
+                <Border x:Name="currentStatusBorder" Padding="8,4" Margin="0,5,0,15">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="txtCurrentStatusIcon" Margin="0,0,5,0"/>
+                        <TextBlock x:Name="txtCurrentStatus" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="Select New Status:" FontWeight="Bold" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+
+                <!-- Status Selection -->
+                <ComboBox x:Name="cbStatus" 
+                          SelectedValuePath="Status"
+                          Height="35"
+                          Margin="0,0,0,10">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border Background="{Binding Color}" 
+                                        CornerRadius="3"
+                                        Padding="8,4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Icon}" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding DisplayName}" 
+                                                   Foreground="White" 
+                                                   FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <!-- Status Description -->
+                <Border Background="#3E3E42" Padding="10" CornerRadius="3"> 
+                    <TextBlock x:Name="txtStatusDescription" 
+                               TextWrapping="Wrap"
+                               Foreground="#DDDDDD"
+                               FontSize="12"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnCancel" Content="Cancel" Width="80" 
+                    Click="BtnCancel_Click" Margin="0,0,10,0"/>
+            <Button x:Name="btnSave" Content="Change Status" Width="100" 
+                    Click="BtnSave_Click" Background="#4CAF50" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>
