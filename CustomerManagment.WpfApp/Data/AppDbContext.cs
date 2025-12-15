@@ -1,4 +1,5 @@
-﻿using CustomerManagment.WpfApp.Data.Models;
+﻿using CustomerManagment.WpfApp.Data.Config;
+using CustomerManagment.WpfApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 
@@ -60,6 +61,14 @@ namespace CustomerManagment.WpfApp.Data
                       .WithMany(c => c.CustomerRequests)
                       .HasForeignKey(e => e.CustomerId);
             });
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            ArgumentNullException.ThrowIfNull(configurationBuilder);
+
+            configurationBuilder.Properties<DateTime>().HaveConversion<DateTimeAsUtcValueConverter>();
+            configurationBuilder.Properties<DateTime?>().HaveConversion<NullableDateTimeAsUtcValueConverter>();
         }
     }
 }

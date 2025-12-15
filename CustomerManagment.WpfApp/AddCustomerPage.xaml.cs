@@ -49,25 +49,25 @@ namespace CustomerManagment.WpfApp
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtEmail.Text) || !IsValidEmail(txtEmail.Text))
-                {
-                    MessageBox.Show("Please enter a valid email address.", "Validation Error",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                //if (string.IsNullOrWhiteSpace(txtEmail.Text) || !IsValidEmail(txtEmail.Text))
+                //{
+                //    MessageBox.Show("Please enter a valid email address.", "Validation Error",
+                //        MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return;
+                //}
 
-                if (!string.IsNullOrWhiteSpace(txtMobile.Text) && !IsValidPhoneNumber(txtMobile.Text))
-                {
-                    MessageBox.Show("Please enter a valid mobile number.", "Validation Error",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                //if (!string.IsNullOrWhiteSpace(txtMobile.Text) && !IsValidPhoneNumber(txtMobile.Text))
+                //{
+                //    MessageBox.Show("Please enter a valid mobile number.", "Validation Error",
+                //        MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return;
+                //}
 
                 // Create new customer
                 var customer = new Customer
                 {
                     CustomerName = txtName.Text.Trim(),
-                    CustomerEmail = txtEmail.Text.Trim(),
+                    CustomerEmail =txtEmail.Text.Trim(),
                     CustomerMobileNumber = string.IsNullOrWhiteSpace(txtMobile.Text) ? null : txtMobile.Text.Trim(),
                     CustomerPhoneNumber = string.IsNullOrWhiteSpace(txtPhone.Text) ? null : txtPhone.Text.Trim(),
                     CustomerJobTitle = string.IsNullOrWhiteSpace(txtJobTitle.Text) ? null : txtJobTitle.Text.Trim(),
