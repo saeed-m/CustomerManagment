@@ -11,7 +11,7 @@ dotnet add-Migration init
 dotnet Update-Database
 ```
 
-![CustomerManagment](CustomerManagment.WpfApp/Screenshot.png)
+![CustomerManagment.WpfApp](Screenshot.png)
 
 
 
